@@ -1,6 +1,6 @@
 # Cooking World Back-end
 
-## Dependencias##
+## Dependencias
 Ninguna hasta el momento
 
 ## Instalación
