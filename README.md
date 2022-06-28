@@ -1,8 +1,8 @@
-#Cooking World Back-end
+# Cooking World Back-end
 
-##Dependencias##
+## Dependencias##
 Ninguna hasta el momento
 
-##Instalación
+## Instalación
 Clonar el repositorio y ejecutar el siguiente comando dentro de la carpeta: <br>
 `npm install remotely`
