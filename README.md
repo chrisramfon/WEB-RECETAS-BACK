@@ -12,3 +12,7 @@ Clonar el repositorio y ejecutar el siguiente comando dentro de la carpeta: <br>
 
 Instalar nodemon de manera global: <br>
 `npm install -g nodemon`
+
+## Ejecución
+Dentro de la carpeta del proyecto, ejecutar: <br>
+`nodemon --exect npm start`
