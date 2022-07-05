@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `comentario_publicacion` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `publicacion` bigint(50) NOT NULL,
   `usuario` bigint(50) NOT NULL,
   `texto` varchar(50) NOT NULL
@@ -41,7 +41,7 @@ CREATE TABLE `comentario_publicacion` (
 --
 
 CREATE TABLE `comentario_receta` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `receta` bigint(50) NOT NULL,
   `usuario` bigint(50) NOT NULL,
   `texto` varchar(50) NOT NULL
@@ -54,7 +54,7 @@ CREATE TABLE `comentario_receta` (
 --
 
 CREATE TABLE `ingrediente` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `receta` bigint(50) NOT NULL,
   `ingrediente` varchar(50) NOT NULL,
   `cantidad` int(50) NOT NULL
@@ -67,7 +67,7 @@ CREATE TABLE `ingrediente` (
 --
 
 CREATE TABLE `perfil` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(70) NOT NULL,
   `usuario` varchar(20) NOT NULL,
   `correo` varchar(60) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE `perfil` (
 --
 
 CREATE TABLE `publicacion` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `texto` varchar(50) NOT NULL,
   `usuario` bigint(50) NOT NULL,
   `portada` varchar(50) NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE `publicacion` (
 --
 
 CREATE TABLE `publicacion_imagen` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `imagen` varchar(50) NOT NULL,
   `receta` bigint(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -113,7 +113,7 @@ CREATE TABLE `publicacion_imagen` (
 --
 
 CREATE TABLE `receta` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `texto` varchar(50) NOT NULL,
   `megusta` int(50) NOT NULL,
   `usuario` bigint(50) NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE `receta` (
 --
 
 CREATE TABLE `receta_imagen` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `imagen` longblob NOT NULL,
   `receta` bigint(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -144,7 +144,7 @@ CREATE TABLE `receta_imagen` (
 --
 
 CREATE TABLE `re_publicacion_comentario` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `comentario` bigint(50) NOT NULL,
   `texto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -156,7 +156,7 @@ CREATE TABLE `re_publicacion_comentario` (
 --
 
 CREATE TABLE `re_receta_comentario` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `comentario` bigint(50) NOT NULL,
   `texto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -168,7 +168,7 @@ CREATE TABLE `re_receta_comentario` (
 --
 
 CREATE TABLE `usuario` (
-  `id` bigint(50) NOT NULL,
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(20) NOT NULL,
   `pass` varchar(65) NOT NULL,
   `status` bit(50) NOT NULL,
