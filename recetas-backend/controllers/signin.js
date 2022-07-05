@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-var 
-=======
 const conn = require('../controllers/mysqlconnection');
 const bcrypt = require('bcrypt');
 const util = require('util');
@@ -58,4 +55,3 @@ module.exports = register;
     respuesta = {mensaje: "No se pudo registrar el usuario.", Error: error}
     res.send(respuesta).status(400);
 }*/
->>>>>>> registro
