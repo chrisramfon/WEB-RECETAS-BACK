@@ -25,7 +25,10 @@ register.reg = async(req, res)=>{
         const queryU = util.promisify(conn.conf.query).bind(conn.conf);
         const rowsU = await queryU('insert into Usuario (Usuario, Pass, Status) values (?, ?, 1)', [req.body.Usuario, encrypted]);
         
-
+        //Registra los datos en la tabla llamada Perfil
+        const queryP = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsP = await queryP('Insert into Perfil (Nombre, Usuario, Correo, Status) values (?, ?, ?, 1)', [req.body.Nombre, req.body.Usuario, req.body.Correo]);
+        
         res.send(`Usuario ${req.body.Usuario} registrado con éxito.`).status(200);
     }catch(e){
         throw 'No se pudo registrar el usuario `${e}`';
