@@ -115,8 +115,8 @@ create table Seguido (
     id bigint not null AUTO_INCREMENT,
     Usuario bigint not null,
     Seguidor bigint not null,
-    constraint PKSeguido primary key (id)),
+    constraint PKSeguido primary key (id),
     constraint FKSeguido_Usuario foreign key (Usuario)
     references Usuario (id),
     constraint FKSeguido_Seguidor foreign key (Seguidor)
-    references Usuario (id);
+    references Usuario (id));
