@@ -40,6 +40,7 @@ create table Receta (
 create table Publicacion (
     id bigint not null AUTO_INCREMENT,
     Texto Text(5000) not null,
+    Fecha date not null,
     Usuario bigint not null,
     Portada varchar(40) not null,
     Likes int, 
