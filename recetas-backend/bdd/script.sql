@@ -25,6 +25,7 @@ create table Receta (
     id bigint not null AUTO_INCREMENT,
     Texto text(5000) not null, 
     Likes int,
+    Fecha date not null,
     Usuario bigint not null,
     Costo int not null,
     Tipo_de_cocina varchar(30) not null,
