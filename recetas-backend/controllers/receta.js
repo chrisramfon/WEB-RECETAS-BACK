@@ -14,6 +14,7 @@ receta.reg = async (req, res)=>{
     const validatoken = async function (Token){
         const decoded = jwt.verify(Token, process.env.SECRET);
         const user = decoded.id;
+        Usuario = user;
         return user
     }
 
@@ -27,7 +28,7 @@ receta.reg = async (req, res)=>{
         }
     }
 
-    const creacarpeta = async function (Receta, Usuario, Imagen){
+    const creacarpeta = async function (Receta, Usuario){
         let path = `./img/${Usuario}/${Receta}`;
         if(!fs.existsSync(path)) {const newdir = await fs.mkdirSync(path, {recursive: true});}
         //path = `${path}/${Imagen.name}`;
@@ -41,16 +42,11 @@ receta.reg = async (req, res)=>{
 
     validatoken(req.body.Token).then((user) => {
         console.log(user);
-        registrareceta(req.body.Texto, user, req.body.Costo, req.body.Cocina, req.body.Lugar, req.body.Tiempo, req.body.Dificultad, req.body.Porciones).then((rowsR)=>{
-            console.log(rowsR.insertId);
-            creacarpeta(rowsR.insertId, user, req.files.Imagen).then((path) =>{
-                console.log(path);
-                guardarimagen(path).then((moved) =>{
-                    console.log(moved);
-                })
-            })
-        })
-    });
+        return user;
+    })
+    .then((Usuario) => registrareceta(req.body.Texto, Usuario, req.body.Costo, req.body.Cocina, req.body.Lugar, req.body.Tiempo, req.body.Dificultad, req.body.Porciones))
+    .then((rowsR => creacarpeta(rowsR.insertId, Usuario)))
+    .then((path) => console.log(path)) //mover imagen cuando funcione el front
 
     res.send({Mensaje: 'Receta registrada con éxito.'}).status(200); 
 }
