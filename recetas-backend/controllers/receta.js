@@ -51,4 +51,16 @@ receta.reg = async (req, res)=>{
     res.send({Mensaje: 'Receta registrada con éxito.'}).status(200); 
 }
 
+receta.explore = async (req, res)=>{
+
+    try{
+        const queryE = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsE = await queryE('select Re.id, Re.Tipo_de_cocina, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario;');
+
+        res.send(rowsE).status(200);
+    }catch(error){
+        res.send({Mensaje: 'No se pudieron consultar las recetas', Error: error})
+    }
+}
+
 module.exports = receta; 
