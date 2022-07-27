@@ -79,6 +79,20 @@ receta.encontrar = async (req, res)=>{
 
 }
 
+receta.favorito = async(req, res)=>{
+    try{
+        const decoded = jwt.verify(req.body.Token, 'Secreto');
+        const Usuario = decoded.id;
+
+        const queryF = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsF = queryF('insert into Favorito (Receta, Usuario) values (?, ?)', [req.body.Receta, Usuario]);
+
+        res.send({Mensaje: 'Receta registrada en favoritos', Status: true})
+    }catch(error){
+        res.send({Mensaje: 'No se pudo registrar como favorito', Error: error}).status(400);
+    }
+}
+
 module.exports = receta; 
 
 

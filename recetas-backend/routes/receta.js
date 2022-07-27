@@ -8,4 +8,6 @@ router.get('/', receta.explore);
 
 router.post('/encontrar', receta.encontrar);
 
+router.post('/favorito', receta.favorito);
+
 module.exports = router;
