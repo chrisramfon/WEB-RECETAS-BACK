@@ -6,6 +6,6 @@ router.post('/', receta.reg);
 
 router.get('/', receta.explore);
 
-router.get('/encontrar', receta.encontrar);
+router.post('/encontrar', receta.encontrar);
 
 module.exports = router;
