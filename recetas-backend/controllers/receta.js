@@ -30,8 +30,7 @@ receta.reg = async (req, res)=>{
 
     const creacarpeta = async function (Receta, Usuario){
         let path = `./img/${Usuario}/${Receta}`;
-        if(!fs.existsSync(path)) {const newdir = await fs.mkdirSync(path, {recursive: true});}
-        //path = `${path}/${Imagen.name}`;
+        if(!fs.existsSync(path)) {const newdir = await fs.mkdirSync(path, {recursive: true});}S
         return path;
     }
 
@@ -64,4 +63,22 @@ receta.explore = async (req, res)=>{
     }
 }
 
+receta.encontrar = async (req, res)=>{
+
+    const buscareceta = async function (id){
+        try{
+            const queryR = util.promisify(conn.conf.query).bind(conn.conf);
+            const rowsR = queryR('select Re.id, Re.Titulo, Re.Texto, Re.Likes, Re.Fecha, Re.Costo, Re.Tipo_de_cocina, Re.Lugar, Re.Tiempo, Re.Dificultad, Re.Porciones, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Re.id = ?;', [id]);
+            return rowsR;
+        }catch(error){
+            return error;
+        }
+    }
+
+    buscareceta(req.body.id).then((rowsR) => res.send(rowsR[0]).status(200) );
+
+}
+
 module.exports = receta; 
+
+
