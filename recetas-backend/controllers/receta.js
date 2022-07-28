@@ -107,6 +107,25 @@ receta.favorito = async(req, res)=>{
     .then((rowsF) => res.send(rowsF).status(200));
 }
 
+receta.gfavorito = async(req, res)=>{
+
+    const validatoken = async function (Token){
+        const decoded = jwt.verify(Token, 'Secreto');
+        const user = decoded.id;
+        return user;
+    }
+
+    const registrafavorito = async function(Usuario){
+        const queryF = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsF = queryF('insert into Favorito (Receta, Usuario) values (?, ?)', [req.body.Receta, Usuario]);
+        return rowsF;
+    }
+
+    validatoken(req.body.Token)
+    .then((user)=> registrafavorito(user))
+    .then((rowsF)=>res.send({Mensaje: 'Guardada en favoritos', rows: rowsF}).status(200));
+}
+
 module.exports = receta; 
 
 /*
