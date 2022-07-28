@@ -133,4 +133,4 @@ create table Favorito (
     constraint FKFavoritoUsuario foreign key (Usuario)
     references Usuario (id));
 
-insert into Favorito (Receta, Usuario) values (2, 2);
+select * from Favorito where Receta = 1 and Usuario = 2;
