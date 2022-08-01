@@ -126,19 +126,23 @@ receta.gfavorito = async(req, res)=>{
     .then((rowsF)=>res.send({Mensaje: 'Guardada en favoritos', rows: rowsF}).status(200));
 }
 
-module.exports = receta; 
+receta.lfavorito = async (req, res)=>{
 
-/*
-try{
-    const decoded = jwt.verify(req.body.Token, 'Secreto');
-    const Usuario = decoded.id;
+    const validatoken = async function (Token){
+        const decoded = jwt.verify(Token, 'Secreto');
+        const user = decoded.id;
+        return user;
+    }
 
-    const queryF = util.promisify(conn.conf.query).bind(conn.conf);
-    const rowsF = queryF('insert into Favorito (Receta, Usuario) values (?, ?)', [req.body.Receta, Usuario]);
+    const consulta = async function(Usuario){
+        const queryF = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsF = await queryF('select Re.id, Re.Titulo, Re.Tipo_de_cocina,  Us.Usuario from Favorito Fa join Receta Re on Re.id = Fa.Receta join Usuario Us on Us.id = Re.Usuario where Fa.Usuario = ?', [Usuario]);
+        return rowsF;
+    }
 
-    res.send({Mensaje: 'Receta registrada en favoritos', Status: true})
-}catch(error){
-    res.send({Mensaje: 'No se pudo registrar como favorito', Error: error}).status(400);
+    validatoken(req.body.Token)
+    .then((user)=> consulta(user))
+    .then((rowsF) => res.send(rowsF).status(200));
 }
 
-*/
+module.exports = receta;
