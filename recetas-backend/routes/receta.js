@@ -12,6 +12,6 @@ router.post('/ValidaFavorito', receta.favorito);
 
 router.post('/GuardarFavorito', receta.gfavorito);
 
-router.get('/Favoritos', receta.lfavorito);
+router.post('/Favoritos', receta.lfavorito);
 
 module.exports = router;
