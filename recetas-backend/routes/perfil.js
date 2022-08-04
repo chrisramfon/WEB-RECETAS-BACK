@@ -6,4 +6,6 @@ router.post('/', perfil.buscar);
 
 router.post('/Seguidores', perfil.seguidores);
 
+router.post('/Seguidos', perfil.seguidos);
+
 module.exports = router;

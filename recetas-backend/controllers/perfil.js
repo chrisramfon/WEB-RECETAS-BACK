@@ -33,6 +33,9 @@ perfil.buscar = async (req, res)=>{
 
 }
 
+
+
+//Funcion para obtener el número de seguidores de un perfil
 perfil.seguidores = async (req, res)=>{
     try{
         const queryS = util.promisify(conn.conf.query).bind(conn.conf);
@@ -40,6 +43,16 @@ perfil.seguidores = async (req, res)=>{
         res.send(rowsS).status(200);
     }catch(error){
         res.send({Mensaje: `No se pudieron buscar los usuarios que siguen al perfil ${req.body.id}`, Error: error}).status(200);
+    }
+}
+
+perfil.seguidos = async (req, res)=>{
+    try{
+        const queryS = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsS = await queryS('select COUNT(*) as Seguidos from seguido se where se.Seguidor = ?', [req.body.id]);
+        res.send(rowsS).status(200);
+    }catch(error){
+        res.send({Mensaje: `No se pudo obtener la lista de seguidos del perfil ${req.body.id}`, Error: error}).status(400);
     }
 }
 
