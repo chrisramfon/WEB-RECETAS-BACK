@@ -46,6 +46,7 @@ perfil.seguidores = async (req, res)=>{
     }
 }
 
+//Funcion para obtener el numero de usuarios que sigue un perfil
 perfil.seguidos = async (req, res)=>{
     try{
         const queryS = util.promisify(conn.conf.query).bind(conn.conf);

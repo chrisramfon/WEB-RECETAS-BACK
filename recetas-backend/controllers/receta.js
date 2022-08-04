@@ -150,4 +150,14 @@ receta.lfavorito = async (req, res)=>{
     .then((rowsF) => res.send(rowsF).status(200));
 }
 
+receta.usuario = async (req, res)=>{
+    try{
+        const queryR = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsR = await queryR('select Re.id, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Us.id = ? ORDER BY id DESC', [req.body.id]);
+        res.send(rowsR).status(200);
+    }catch(error){
+        res.send({Mensaje: `No se pudo obtener la lista de recetas el usuario ${req.body.id}`, Error: error}).status(400);
+    }
+}
+
 module.exports = receta;

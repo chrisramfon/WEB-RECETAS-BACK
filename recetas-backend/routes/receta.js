@@ -14,4 +14,6 @@ router.post('/GuardarFavorito', receta.gfavorito);
 
 router.post('/Favoritos', receta.lfavorito);
 
+router.post ('/Usuario', receta.usuario);
+
 module.exports = router;
