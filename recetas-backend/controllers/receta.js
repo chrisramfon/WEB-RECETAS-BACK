@@ -30,13 +30,17 @@ receta.reg = async (req, res)=>{
 
     const creacarpeta = async function (Receta, Usuario){
         let path = `./img/${Usuario}/${Receta}`;
-        if(!fs.existsSync(path)) {const newdir = await fs.mkdirSync(path, {recursive: true});}S
+        if(!fs.existsSync(path)) {const newdir = await fs.mkdirSync(path, {recursive: true});}
         return path;
     }
 
     const guardarimagen = async function (path){
-        const moved = await image.mv(path);
-        return moved;
+        const image = req.file
+        //const moved = await fs.mv(path)
+        //return moved;
+        console.log('archivo'+image);
+        console.log('Ruta '+path);
+        return "Imagen movida";
     }
 
     validatoken(req.body.Token).then((user) => {
@@ -45,7 +49,8 @@ receta.reg = async (req, res)=>{
     })
     .then((Usuario) => registrareceta(req.body.Titulo, req.body.Texto, Usuario, req.body.Costo, req.body.Cocina, req.body.Lugar, req.body.Tiempo, req.body.Dificultad, req.body.Porciones))
     .then((rowsR => creacarpeta(rowsR.insertId, Usuario)))
-    .then((path) => console.log(path)) //mover imagen cuando funcione el front
+    .then((path) => guardarimagen(path))
+    .then((moved) =>res.send(moved).status(200)) //mover imagen cuando funcione el front
     
 
     res.send({Mensaje: 'Receta registrada con éxito.'}).status(200); 
