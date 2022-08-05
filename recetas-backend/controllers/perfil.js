@@ -71,7 +71,7 @@ perfil.validaseguido = async (req, res)=>{
     }
 
     const buscaseguido = async function(follower, followed){
-        let rows = 0;
+        let rows = 5;
         if(follower == followed) return rows;
         const queryS = util.promisify(conn.conf.query).bind(conn.conf);
         const rowsS = queryS('select * from Seguido where Usuario = ? and Seguidor = ?', [followed, follower]);
@@ -79,8 +79,10 @@ perfil.validaseguido = async (req, res)=>{
     }
 
     const validaseguido = async function (rowsS){
-        if(rowsS <= 0){
-            res.send({Seguido: false, rows: rowsS}).status(200);
+        if(rowsS == 5){
+            res.send({Seguido: false, rows: rowsS, Mensaje: 'Es el mismo usuario'})
+        }else if(rowsS <= 0){
+                res.send({Seguido: false, rows: rowsS}).status(200);
         }else{
             res.send({Seguido: true, rows: rowsS}).status(200);
         }
