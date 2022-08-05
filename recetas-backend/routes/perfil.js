@@ -8,4 +8,6 @@ router.post('/Seguidores', perfil.seguidores);
 
 router.post('/Seguidos', perfil.seguidos);
 
+router.post('/ValidaSeguido', perfil.validaseguido);
+
 module.exports = router;

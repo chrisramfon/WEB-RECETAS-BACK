@@ -57,4 +57,38 @@ perfil.seguidos = async (req, res)=>{
     }
 }
 
+//Funcion para validar si un usuario ya sigue a otro
+perfil.validaseguido = async (req, res)=>{
+
+    let follower
+    let followed = req.body.id
+
+    const validatoken = async function (Token){
+        const decoded = jwt.verify(Token, 'Secreto');
+        const user = decoded.id;
+        follower = user
+        return user;
+    }
+
+    const buscaseguido = async function(follower, followed){
+        let rows = 0;
+        if(follower == followed) return rows;
+        const queryS = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsS = queryS('select * from Seguido where Usuario = ? and Seguidor = ?', [followed, follower]);
+        return rowsS;
+    }
+
+    const validaseguido = async function (rowsS){
+        if(rowsS <= 0){
+            res.send({Seguido: false}).status(200);
+        }else{
+            res.send({Seguido: true}).status(200);
+        }
+    }
+
+    validatoken(req.body.Token)
+    .then((user) => buscaseguido(user, followed))
+    .then ((rowsS)=> validaseguido(rowsS));
+}
+
 module.exports = perfil;
