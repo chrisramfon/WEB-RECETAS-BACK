@@ -80,9 +80,9 @@ perfil.validaseguido = async (req, res)=>{
 
     const validaseguido = async function (rowsS){
         if(rowsS <= 0){
-            res.send({Seguido: false}).status(200);
+            res.send({Seguido: false, rows: rowsS}).status(200);
         }else{
-            res.send({Seguido: true}).status(200);
+            res.send({Seguido: true, rows: rowsS}).status(200);
         }
     }
 
