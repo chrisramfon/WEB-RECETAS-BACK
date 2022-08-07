@@ -10,4 +10,8 @@ router.post('/Seguidos', perfil.seguidos);
 
 router.post('/ValidaSeguido', perfil.validaseguido);
 
+router.post('/Seguir', perfil.seguir);
+
+router.post('/DejarSeguir', perfil.dejarseguir)
+
 module.exports = router;

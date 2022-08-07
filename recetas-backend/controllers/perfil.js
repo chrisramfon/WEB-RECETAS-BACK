@@ -80,7 +80,7 @@ perfil.validaseguido = async (req, res)=>{
 
     const validaseguido = async function (rowsS){
         if(rowsS == 5){
-            res.send({Seguido: false, rows: rowsS, Mensaje: 'Es el mismo usuario'})
+            res.send({Seguido: false, rows: rowsS, Mensaje: 'Es el mismo usuario'}).status(200);
         }else if(rowsS <= 0){
                 res.send({Seguido: false, rows: rowsS}).status(200);
         }else{
@@ -91,6 +91,32 @@ perfil.validaseguido = async (req, res)=>{
     validatoken(req.body.Token)
     .then((user) => buscaseguido(user, followed))
     .then ((rowsS)=> validaseguido(rowsS));
+}
+
+perfil.seguir = async (req, res) => {
+    try{
+        const decoded = jwt.verify(req.body.Token, 'Secreto');
+        const user = decoded.id;
+
+        const queryS = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsS = await queryS ('insert into Seguido (Usuario, Seguidor) values(?, ?)', [req.body.id, user]);
+        res.send({Mensaje: 'Usuario seguido', rows: rowsS});
+    }catch(error){
+        res.send({Mensaje: 'No se pudo seguir al usuario'}).status(400);
+    }
+}
+
+perfil.dejarseguir = async (req, res) => {
+    try{
+        const decoded = jwt.verify(req.body.Token, 'Secreto');
+        const user = decoded.id;
+
+        const queryD = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsD = await queryD('delete from seguido where Usuario = ? and Seguidor = ?', [req.body.id, user]);
+        res.send({Mensaje: 'Usuario dejado de seguir', rows: rowsD});
+    }catch(error){
+        res.send({Mensaje: 'No se pudo eliminar de la tabla', Error: error})
+    }
 }
 
 module.exports = perfil;
