@@ -12,6 +12,8 @@ router.post('/ValidaSeguido', perfil.validaseguido);
 
 router.post('/Seguir', perfil.seguir);
 
-router.post('/DejarSeguir', perfil.dejarseguir)
+router.post('/DejarSeguir', perfil.dejarseguir);
+
+router.post('/Editar', perfil.editar);
 
 module.exports = router;

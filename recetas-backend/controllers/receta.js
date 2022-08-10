@@ -60,7 +60,7 @@ receta.explore = async (req, res)=>{
 
     try{
         const queryE = util.promisify(conn.conf.query).bind(conn.conf);
-        const rowsE = await queryE('select Re.id, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario;');
+        const rowsE = await queryE('select Re.id, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario, Us.id as Identificador from Receta Re join Usuario Us on Us.id = Re.Usuario;');
 
         res.send(rowsE).status(200);
     }catch(error){

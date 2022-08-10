@@ -119,4 +119,33 @@ perfil.dejarseguir = async (req, res) => {
     }
 }
 
+perfil.editar = async (req, res) => {
+
+    const validatoken = async function (Token){
+        const decoded = jwt.verify(Token, 'Secreto');
+        const user = decoded.id;
+        console.log(user);
+        return user;
+    }
+
+    const buscausuario = async function (id){
+        const queryU = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsU = await queryU('select usuario from usuario where id = ?', [id]);
+        return rowsU;
+    }
+
+    const editarperfil = async function (Usuario, Nombre, Correo, Bio){
+        const queryE = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsE = await queryE("update perfil set Nombre = ?, Correo = ?, Bio = ? where usuario like ?", [Nombre, Correo, Bio, Usuario]);
+        return rowsE;
+    }
+
+    validatoken(req.body.Token)
+    .then((user) => buscausuario(user))
+    .then((rowsU) => editarperfil(rowsU[0].usuario, req.body.Nombre, req.body.Correo, req.body.Bio))
+    .then((rowsE) => res.send(rowsE));
+
+
+}
+
 module.exports = perfil;
