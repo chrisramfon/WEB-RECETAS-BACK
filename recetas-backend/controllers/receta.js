@@ -18,10 +18,10 @@ receta.reg = async (req, res)=>{
         return user
     }
 
-    const registrareceta = async function (Titulo, Texto, Usuario, Costo, Cocina, Lugar, Tiempo, Dificultad, Porciones, Vistas){
+    const registrareceta = async function (Titulo, Texto, Ingredientes, Usuario, Costo, Cocina, Lugar, Tiempo, Dificultad, Porciones, Vistas){
         
         const queryR = util.promisify(conn.conf.query).bind(conn.conf);
-        const rowsR = queryR('insert into Receta (Titulo,Texto, Fecha, Usuario, Costo, Tipo_de_cocina, Lugar, Tiempo, Dificultad, Porciones, Likes, Vistas) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0)', [Titulo, Texto, Fecha, Usuario, Costo, Cocina, Lugar, Tiempo, Dificultad, Porciones]);
+        const rowsR = queryR('insert into Receta (Titulo,Texto, Ingredientes, Fecha, Usuario, Costo, Tipo_de_cocina, Lugar, Tiempo, Dificultad, Porciones, Likes, Vistas) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0)', [Titulo, Texto, Ingredientes, Fecha, Usuario, Costo, Cocina, Lugar, Tiempo, Dificultad, Porciones]);
         return rowsR;        
     }
 
@@ -44,7 +44,7 @@ receta.reg = async (req, res)=>{
         console.log(user);
         return user;
     })
-    .then((Usuario) => registrareceta(req.body.Titulo, req.body.Texto, Usuario, req.body.Costo, req.body.Cocina, req.body.Lugar, req.body.Tiempo, req.body.Dificultad, req.body.Porciones))
+    .then((Usuario) => registrareceta(req.body.Titulo, req.body.Texto, req.body.Ingredientes, Usuario, req.body.Costo, req.body.Cocina, req.body.Lugar, req.body.Tiempo, req.body.Dificultad, req.body.Porciones))
     .then((rowsR => creacarpeta(rowsR.insertId, Usuario)))
     .then((path) => guardarimagen(path))
     .then((moved) =>res.send({Mensaje: 'Receta registrada', res: moved}).status(200)) //mover imagen cuando funcione el front
@@ -68,7 +68,7 @@ receta.encontrar = async (req, res)=>{
     const buscareceta = async function (id){
         try{
             const queryR = util.promisify(conn.conf.query).bind(conn.conf);
-            const rowsR = queryR('select Re.id, Re.Vistas, Re.Titulo, Re.Texto, Re.Likes, Re.Fecha, Re.Costo, Re.Tipo_de_cocina, Re.Lugar, Re.Tiempo, Re.Dificultad, Re.Porciones, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Re.id = ?;', [id]);
+            const rowsR = queryR('select Re.id, Re.Vistas, Re.Titulo, Re.Texto, Re.Ingredientes, Re.Likes, Re.Fecha, Re.Costo, Re.Tipo_de_cocina, Re.Lugar, Re.Tiempo, Re.Dificultad, Re.Porciones, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Re.id = ?;', [id]);
             return rowsR;
         }catch(error){
             return error;
