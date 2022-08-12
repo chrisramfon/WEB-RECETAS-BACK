@@ -33,6 +33,7 @@ create table Receta (
     Lugar varchar(30),
     Tiempo varchar(10) not null,
     Dificultad varchar(10) not null,
+    Vistas bigint not null,
     Porciones tinyint not null, 
     constraint PKReceta primary key (id),
     constraint FKReceta_Usuario foreign key (Usuario)

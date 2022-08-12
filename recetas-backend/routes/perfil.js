@@ -16,4 +16,6 @@ router.post('/DejarSeguir', perfil.dejarseguir);
 
 router.post('/Editar', perfil.editar);
 
+router.post('/Vista', receta.vista);
+
 module.exports = router;
