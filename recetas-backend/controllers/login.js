@@ -21,10 +21,10 @@ login.log = async(req, res) => {
     
     //Genera el token
     const payload = {id: rowsL[0].id};
-    const token = await jwt.sign(payload, process.env.SECRET);
+    const token = await jwt.sign(payload, 'Secreto');
 
     //Envía el token generado
-    res.send({Mensaje: `Bienvenido ${rowsL[0].Usuario}`, Totken: token});
+    res.send({Mensaje: `Bienvenido ${rowsL[0].Usuario}`, Token: token});
     }catch(error){
         res.send({Mensaje: "Usuario o contraseña invalidos.", Error: error})
     }

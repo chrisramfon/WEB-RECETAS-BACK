@@ -23,13 +23,14 @@ create table Perfil (
 
 create table Receta (
     id bigint not null AUTO_INCREMENT,
+    Titulo varchar(60) not null,
     Texto text(5000) not null, 
     Likes int,
     Fecha date not null,
     Usuario bigint not null,
-    Costo int not null,
+    Costo float(5, 2) not null,
     Tipo_de_cocina varchar(30) not null,
-    Lugar varchar(30) not null,
+    Lugar varchar(30),
     Tiempo varchar(10) not null,
     Dificultad varchar(10) not null,
     Porciones tinyint not null, 
@@ -119,4 +120,15 @@ create table Seguido (
     constraint FKSeguido_Usuario foreign key (Usuario)
     references Usuario (id),
     constraint FKSeguido_Seguidor foreign key (Seguidor)
+    references Usuario (id));
+
+
+create table Favorito (
+    id bigint not null AUTO_INCREMENT,
+    Receta bigint not null,
+    Usuario bigint not null,
+    constraint PKFavorito primary key (id),
+    constraint FKFavoritoReceta foreign key (Receta)
+    references Receta (id),
+    constraint FKFavoritoUsuario foreign key (Usuario)
     references Usuario (id));
