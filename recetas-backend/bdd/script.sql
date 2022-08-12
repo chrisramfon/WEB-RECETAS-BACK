@@ -24,6 +24,7 @@ create table Perfil (
 create table Receta (
     id bigint not null AUTO_INCREMENT,
     Titulo varchar(60) not null,
+    Ingredientes varchar(500) not null,
     Texto text(5000) not null, 
     Likes int,
     Fecha date not null,
