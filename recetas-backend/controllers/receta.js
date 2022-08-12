@@ -55,7 +55,7 @@ receta.explore = async (req, res)=>{
 
     try{
         const queryE = util.promisify(conn.conf.query).bind(conn.conf);
-        const rowsE = await queryE('select Re.id, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario, Us.id as Identificador from Receta Re join Usuario Us on Us.id = Re.Usuario;');
+        const rowsE = await queryE('select Re.id, Re.Vistas, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario, Us.id as Identificador from Receta Re join Usuario Us on Us.id = Re.Usuario;');
 
         res.send(rowsE).status(200);
     }catch(error){
@@ -68,7 +68,7 @@ receta.encontrar = async (req, res)=>{
     const buscareceta = async function (id){
         try{
             const queryR = util.promisify(conn.conf.query).bind(conn.conf);
-            const rowsR = queryR('select Re.id, Re.Titulo, Re.Texto, Re.Likes, Re.Fecha, Re.Costo, Re.Tipo_de_cocina, Re.Lugar, Re.Tiempo, Re.Dificultad, Re.Porciones, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Re.id = ?;', [id]);
+            const rowsR = queryR('select Re.id, Re.Vistas, Re.Titulo, Re.Texto, Re.Likes, Re.Fecha, Re.Costo, Re.Tipo_de_cocina, Re.Lugar, Re.Tiempo, Re.Dificultad, Re.Porciones, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Re.id = ?;', [id]);
             return rowsR;
         }catch(error){
             return error;
@@ -148,7 +148,7 @@ receta.lfavorito = async (req, res)=>{
 receta.usuario = async (req, res)=>{
     try{
         const queryR = util.promisify(conn.conf.query).bind(conn.conf);
-        const rowsR = await queryR('select Re.id, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Us.id = ? ORDER BY id DESC', [req.body.id]);
+        const rowsR = await queryR('select Re.id, Re.Vistas, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario from Receta Re join Usuario Us on Us.id = Re.Usuario where Us.id = ? ORDER BY id DESC', [req.body.id]);
         res.send(rowsR).status(200);
     }catch(error){
         res.send({Mensaje: `No se pudo obtener la lista de recetas el usuario ${req.body.id}`, Error: error}).status(400);
