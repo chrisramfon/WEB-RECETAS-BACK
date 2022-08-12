@@ -155,4 +155,24 @@ receta.usuario = async (req, res)=>{
     }
 }
 
+receta.vista = async (req, res) =>{
+    const buscavistas = async function (id){
+        const queryV = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsV = await queryV('select Vistas from receta where id = ?', [id]);
+        return rowsV;
+    }
+
+    const sumavista = async function (Vistas){
+        Vistas ++
+        console.log(Vistas);
+        const queryV = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsV = await queryV('update receta set Vistas = ? where id = ?', [Vistas, req.body.id]);
+        return rowsV;
+    }
+
+    buscavistas(req.body.id)
+    .then((rowsV) => sumavista(rowsV[0].Vistas))
+    .then((rowsV) => res.send({Mensaje: 'Vista registrada', rows: rowsV}).status(200));
+}
+
 module.exports = receta;
