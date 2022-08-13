@@ -175,4 +175,30 @@ receta.vista = async (req, res) =>{
     .then((rowsV) => res.send({Mensaje: 'Vista registrada', rows: rowsV}).status(200));
 }
 
+receta.modificar = async (req, res) => {
+
+    const validatoken = async function (Token){
+        const decoded = jwt.verify(Token, 'Secreto');
+        const user = decoded.id;
+        return user;
+    }
+
+    const validausuario = async function(user){
+        const queryU = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsU = await queryU('select Usuario from usuario where id = ?', [user]);
+        return rowsU;
+    }
+
+    const editareceta = async function(Costo, Tiempo, Dificultad, Porciones, Lugar, Tipo_de_cocina, Ingredientes, Texto, id, Usuario){
+        const queryE = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsE = await queryE('update receta set Costo = ?, Tiempo = ?, Dificultad = ?, Porciones = ?, Lugar = ?, Tipo_de_cocina = ?, Ingredientes = ?, Texto = ? where id = ? and usuario = ?', [Costo, Tiempo, Dificultad, Porciones, Lugar, Tipo_de_cocina, Ingredientes, Texto, id, Usuario]);
+        return rowsE;
+    }
+
+    validatoken(req.body.Token)
+    .then((user) => validausuario(user))
+    .then((rowsU) => editareceta(req.body.Costo, req.body.Tiempo, req.body.Dificultad, req.body.Porciones, req.body.Lugar, req.body.Tipo_de_cocina, req.body.Ingredientes, req.body.Texto, req.body.id, rowsU[0].Usuario))
+    .then((rowsE) => res.send({Mensaje: 'Datos modificados', rows: rowsE}).status(200));
+}
+
 module.exports = receta;
