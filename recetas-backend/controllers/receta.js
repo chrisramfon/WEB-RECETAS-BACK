@@ -55,7 +55,7 @@ receta.explore = async (req, res)=>{
 
     try{
         const queryE = util.promisify(conn.conf.query).bind(conn.conf);
-        const rowsE = await queryE('select Re.id, Re.Vistas, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario, Us.id as Identificador from Receta Re join Usuario Us on Us.id = Re.Usuario;');
+        const rowsE = await queryE('select Re.id, Re.Vistas, Re.Titulo, Re.Tipo_de_cocina, Us.Usuario, Us.id as Identificador from Receta Re join Usuario Us on Us.id = Re.Usuario ORDER BY Re.id DESC');
 
         res.send(rowsE).status(200);
     }catch(error){
@@ -136,7 +136,7 @@ receta.lfavorito = async (req, res)=>{
 
     const consulta = async function(Usuario){
         const queryF = util.promisify(conn.conf.query).bind(conn.conf);
-        const rowsF = await queryF('select Re.id, Re.Titulo, Re.Tipo_de_cocina,  Us.Usuario from Favorito Fa join Receta Re on Re.id = Fa.Receta join Usuario Us on Us.id = Re.Usuario where Fa.Usuario = ?', [Usuario]);
+        const rowsF = await queryF('select Re.id, Re.Titulo, Re.Tipo_de_cocina,  Us.Usuario from Favorito Fa join Receta Re on Re.id = Fa.Receta join Usuario Us on Us.id = Re.Usuario where Fa.Usuario = ? ORDER BY Re.id DESC', [Usuario]);
         return rowsF;
     }
 
